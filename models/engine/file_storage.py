@@ -14,7 +14,7 @@ class FileStorage:
             all_obj = {}
             for k, v in self.__objects.items():
                 if isinstance(v, cls):
-                   all_obj[k] = v 
+                    all_obj[k] = v
             return all_obj
         return self.__objects
 
@@ -51,7 +51,7 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
