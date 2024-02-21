@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Module to manage file storage for hbnb clone"""
 from os import getenv
-import models
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 
