@@ -8,13 +8,13 @@ from os import getenv
 
 
 class User(BaseModel, Base):
-    """class user attributes"""
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
+    """Representation of a user """
+    if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
-        first_name = Column(String(128), nullable=False)
-        last_name = Column(String(128), nullable=False)
+        first_name = Column(String(128), nullable=True)
+        last_name = Column(String(128), nullable=True)
         places = relationship("Place", backref="user")
         reviews = relationship("Review", backref="user")
     else:
