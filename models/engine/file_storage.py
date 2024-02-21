@@ -22,8 +22,13 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
+        """Returns a dictionary of all objects in the storage"""
         if cls is not None:
-            return {k: v for k, v in self.__objects.items() if isinstance(v, cls)}
+            all_obj = {}
+            for k, v in self.__objects.items():
+                if isinstance(v, cls):
+                    all_obj[k] = v
+            return all_obj
         return self.__objects
 
     def new(self, obj):
@@ -48,7 +53,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+        """To Delete an object from storage"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
-            if key in self.__objects:
-                del self.__objects[key]
+            del self.__objects[key]
