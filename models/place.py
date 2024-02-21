@@ -21,6 +21,8 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        reviews = relationship("Review", cascade="all, delete, delete-orphan",
+                                backref="place")
     else:
         city_id = ""
         user_id = ""
@@ -37,3 +39,24 @@ class Place(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """func to initialize Place"""
         super().__init__(*args, **kwargs)
+
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
+        @property
+        def reviews(self):
+            """getting reviw inst for FileSt relation Place and Review"""
+            stor_review = models.storage.all("Review").values()
+            All_review = []
+            for one_review in stor_review:
+                if one_review.place_id == self.id:
+                    All_review.append(one_review)
+            return All_review
+
+        @property
+        def amenities(self):
+            """getting Amenity inst for FileSt relation"""
+            stor_amenity = models.storage.all("Amenity").values()
+            All_amenity = []
+            for one_amenity in stor_amenity:
+                if one_amenity.place_id == self.id:
+                    All_amenity.append(one_amenity)
+            return All_amenity
