@@ -19,5 +19,5 @@ class City(BaseModel, Base):
         state_id = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes city"""
+        """func to initialize city class"""
         super().__init__(*args, **kwargs)
