@@ -8,10 +8,7 @@ from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import relationship
 
 
-if models.storage_t == "db":
-    Base = declarative_base()
-else:
-    Base = object
+Base = declarative_base()
 
 
 class BaseModel:
