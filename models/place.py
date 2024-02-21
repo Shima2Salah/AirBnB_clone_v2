@@ -54,23 +54,25 @@ class Place(BaseModel, Base):
         """func to initialize Place"""
         super().__init__(*args, **kwargs)
 
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
+    if models.storage_t != 'db':
         @property
         def reviews(self):
-            """getting reviw inst for FileSt relation Place and Review"""
-            stor_review = models.storage.all("Review").values()
-            All_review = []
-            for one_review in stor_review:
-                if one_review.place_id == self.id:
-                    All_review.append(one_review)
-            return All_review
+            """getter attribute returns the list of Review instances"""
+            from models.review import Review
+            review_list = []
+            all_reviews = models.storage.all(Review)
+            for review in all_reviews.values():
+                if review.place_id == self.id:
+                    review_list.append(review)
+            return review_list
 
         @property
         def amenities(self):
-            """getting Amenity inst for FileSt relation"""
-            stor_amenity = models.storage.all("Amenity").values()
-            All_amenity = []
-            for one_amenity in stor_amenity:
-                if one_amenity.place_id == self.id:
-                    All_amenity.append(one_amenity)
-            return All_amenity
+            """getter attribute returns the list of Amenity instances"""
+            from models.amenity import Amenity
+            amenity_list = []
+            all_amenities = models.storage.all(Amenity)
+            for amenity in all_amenities.values():
+                if amenity.place_id == self.id:
+                    amenity_list.append(amenity)
+            return amenity_list
