@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ User Module for HBNB project """
-from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey
 import models
-from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
 from os import getenv
+import sqlalchemy
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
