@@ -18,6 +18,8 @@ sudo ln -s -f /data/web_static/releases/test/ /data/web_static/current
 
 sudo chown -R ubuntu:ubuntu /data/
 
-sed -i '/^\tlocation \/ {$/i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
+if ! grep -q '^\s*location /hbnb_static/ {' /etc/nginx/sites-available/default; then
+    sudo sed -i '/^\s*location \/ {$/i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
+fi
 
 sudo service nginx restart
