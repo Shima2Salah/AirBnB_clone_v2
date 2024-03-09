@@ -1,29 +1,34 @@
 #!/usr/bin/python3
-"""
-distributes an archive to the web servers
-"""
+"""Deploy the web static"""
+from fabric.api import run, put, env
+import os
 
-from fabric.api import put, run, env
-from os.path import exists
-env.hosts = ['52.87.211.200', '34.229.69.61']
+
+env.hosts = ['100.26.142.48', '18.233.62.129']
+env.user = 'ubuntu'
 
 
 def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
-    if exists(archive_path) is False:
-        return False
-    try:
-        file_n = archive_path.split("/")[-1]
-        no_ext = file_n.split(".")[0]
-        path = "/data/web_static/releases/"
-        put(archive_path, '/tmp/')
-        run('mkdir -p {}{}/'.format(path, no_ext))
-        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
-        run('rm /tmp/{}'.format(file_n))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
-        run('rm -rf {}{}/web_static'.format(path, no_ext))
-        run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
-        return True
-    except:
-        return False
+    """function to deploy the code"""
+    fil = os.path.basename(archive_path)
+    folder = fil.replace(".tgz", "")
+    path = "/data/web_static/releases/{}/".format(folder)
+    yes = False
+    if os.path.exists(archive_path):
+        try:
+            put(archive_path, '/tmp/')
+            run("mkdir -p {}".format(path))
+            run("tar -xzf /tmp/{} -C {}".format(fil, path))
+            run("rm -rf /tmp/{}".format(fil))
+            run("mv {}web_static/* {}".format(path, path))
+            run("rm -rf {}web_static".format(path))
+            run("rm -rf /data/web_static/current")
+            run("ln -sf {} /data/web_static/current".format(path))
+            print('Ran SUccesfully')
+            yes = True
+        except Exception as e:
+            print(e)
+            yes = False
+    else:
+        return (False)
+    return (yes)
