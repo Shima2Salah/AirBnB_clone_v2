@@ -9,7 +9,10 @@ from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
 
-Base = declarative_base()
+if models.storage_t == "db":
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class BaseModel:
