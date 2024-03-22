@@ -8,7 +8,7 @@ fab -f 100-clean_web_static.py do_clean:number=2
 import os
 from fabric.api import *
 
-env.hosts = ['52.87.211.200', '34.229.69.61']
+env.hosts = ['100.26.246.108', '34.239.207.152']
 
 
 def do_clean(number=0):
