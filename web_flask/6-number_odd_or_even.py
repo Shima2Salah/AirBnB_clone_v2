@@ -43,10 +43,15 @@ def number_template(n):
     return render_template('5-number.html', n=n)
 
 
-@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
-def number_odd_even(n):
-    """return odd or even number"""
-    return render_template('6-number_odd_or_even.html', n=n)
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def numbersandevenness(n):
+    """return an integer odd or even"""
+    if n % 2 == 0:
+        even_or_odd = 'even'
+    else:
+        even_or_odd = 'odd'
+    return render_template('6-number_odd_or_even.html', n=n,
+                           even_or_odd=even_or_odd)
 
 
 if __name__ == "__main__":
