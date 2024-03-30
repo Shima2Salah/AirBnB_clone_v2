@@ -22,7 +22,7 @@ else:
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
     if models.storage_t == "db":
-        id = Column(String(60, collation='utf8mb4_0900_ai_ci'), primary_key=True)
+        id = Column(String(60, collation='latin1_swedish_ci'), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
 
