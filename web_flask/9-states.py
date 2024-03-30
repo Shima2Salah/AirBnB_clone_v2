@@ -4,18 +4,31 @@
 
 from models import storage
 from models.state import State
+from models.city import City
 from flask import Flask, render_template
 app = Flask(__name__)
 
 
 @app.route('/states')
-@app.route('/states/<id>')
-def states_list(id=None):
+def states():
     """Render template with states
     """
-    path = '9-states.html'
-    states = storage.all(State)
-    return render_template(path, states=states, id=id)
+    states = storage.all(State).values()
+    states = sorted(states, key=lambda x: x.name)
+    return render_template('9-states.html', states=states)
+
+@app.route('/states/<id>')
+def state(id):
+    """Render template with state id
+    """
+    state = storage.get(State, id)
+    if state:
+        cities = storage.all(City).values()
+        cities = [city for city in cities if city.state_id == state.id]
+        cities = sorted(cities, key=lambda x: x.name)
+        return render_template('9-state.html', state=state, cities=cities)
+    else:
+        return render_template('9-not-found.html'), 404
 
 
 @app.teardown_appcontext
