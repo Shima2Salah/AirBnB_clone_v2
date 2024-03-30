@@ -11,9 +11,9 @@ class Review(BaseModel, Base):
     """class review attributes"""
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'reviews'
-        place_id = Column(String(60, collation='utf8mb4_0900_ai_ci'),
+        place_id = Column(String(60, collation='latin1_swedish_ci'),
                           ForeignKey("places.id"), nullable=False)
-        user_id = Column(String(60, collation='utf8mb4_0900_ai_ci'),
+        user_id = Column(String(60, collation='latin1_swedish_ci'),
                          ForeignKey("users.id"), nullable=False)
         text = Column(String(1024), nullable=False)
     else:
