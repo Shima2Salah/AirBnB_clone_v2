@@ -8,3 +8,12 @@ python3 -m venv airb2
 sudo apt install python3.8-venv
 python3 -m venv airb2
 source airb2/bin/activate
+cd AirBnB_clone_v2
+pip3 install flask
+deactivate
+pip3 install gunicorn
+source airb2/bin/activate
+gunicorn --bind 0.0.0.0:5000 web_flask.0-hello_route:app
+sudo lsof -i :5000
+sudo kill 164884 #(pid with the problem)
+pip install Flask
